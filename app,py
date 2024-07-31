@@ -1,0 +1,70 @@
+from tkinter import * 
+import random
+
+#This Python TKinter app 
+#works out the compound interest amount 
+#accrued for a principle amount of money
+#Written by Paul Coke (c)2024
+
+#Here, we define our function that peforms the 
+#calculation on the values entered in the 
+#form.  The text/combo box values are cast to their 
+#respective int and float values.  The overall total 
+#is then formatted to 2 decimal points, tnen assigned 
+#to the "formatted_total" variable 
+def do_calc(): 
+    try:
+        principle_val = float(principle_entry.get())
+        interest_rate_val = float(interest_rate_entry.get())
+        num_years_val = int(clicked.get())
+
+        #Here we use the compound interest formula to calculate 
+        #the overall total which we then assign to the "total" variable
+        total = principle_val * pow(1 + interest_rate_val/100, num_years_val)
+        formatted_total = f"£{total:,.2f}"
+        total_amount.config(text=formatted_total)
+    
+    except Exception as e: 
+        print(e)
+    ##print(formatted_total)
+
+#Initialise TKinter object
+root = Tk() 
+
+#Set title and window size
+root.title("Compound Interest Calculator")
+root.geometry("500x500")
+
+
+#Initialise form controls 
+principle_label = Label(root, text="Principal Amount",font="Arial 16",padx=10, pady=20)
+principle_entry = Entry(root, width=12, font="Arial 12")
+
+interest_rate_label = Label(root, text="Interest Rate",font="Arial 16",padx=10, pady=20)
+interest_rate_entry = Entry(root, width=12, font="Arial 12")
+
+time_label = Label(root, text="Time (duration in years)",font="Arial 16",padx=10, pady=20)
+clicked = IntVar(); 
+time_drop = OptionMenu(root, clicked, "", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+total_label = Label(root, text="Total",font="Arial 16",padx=10, pady=20)
+total_amount = Label(root, width=18, font="Arial 11", fg="navy")
+
+btn_calc = Button(root, text="Calculate", font="Arial 10", command=do_calc)
+
+#Position the form controls on the grid
+principle_label.grid(row=0, column=1)
+principle_entry.grid(row=0, column=2)
+
+interest_rate_label.grid(row=1, column=1)
+interest_rate_entry.grid(row=1, column=2)
+
+time_label.grid(row=2, column=1)
+time_drop.grid(row=2, column=2)
+
+total_label.grid(row=3, column=1)
+total_amount.grid(row=3, column=2)
+
+btn_calc.grid(row=4, column=2)
+
+root.mainloop()
